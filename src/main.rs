@@ -11,13 +11,7 @@ fn main() -> Result<(), std::io::Error>{
     println!("Project Euler - Problem 1");
     println!("=========================");
 
-    print!("Enter value for N: ");
-    std::io::stdout().flush()?;
-
-    let mut input = String::new();
-    std::io::stdin().read_line(&mut input)?;
-
-    let n: u64 = input.trim().parse().unwrap();
+    let n: u64 = retrieve_n()?;
     println!("\nRunning calculation...");
 
 
@@ -35,4 +29,33 @@ fn main() -> Result<(), std::io::Error>{
     println!("Sum: {}", sum);
 
     Ok(())
+}
+
+type ResultN = Result<u64, std::io::Error>;
+
+/* Check if argument for N exists. If so, return that
+ * Otherwise, get N interactively. */
+fn retrieve_n() -> ResultN {
+    let args: Vec<String> = std::env::args().collect();
+    
+    if args.len() > 1 {
+        let n = args[1].parse().unwrap();
+
+        println!("N: {}", n);
+
+        return Ok(n);
+    }
+    else {
+        return interactive_n();
+    }
+}
+
+fn interactive_n() -> ResultN {
+    print!("Enter value for N: ");
+    std::io::stdout().flush()?;
+
+    let mut input = String::new();
+    std::io::stdin().read_line(&mut input)?;
+
+    Ok(input.trim().parse().unwrap())
 }
