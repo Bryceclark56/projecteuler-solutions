@@ -5,19 +5,25 @@
  *  where N is a natural number.
  */
 
-fn main() {
-    const N: isize = 1000; // Constant N for now, default + cli argument later.
+ use std::io::Write;
 
+fn main() -> Result<(), std::io::Error>{
     println!("Project Euler - Problem 1");
     println!("=========================");
 
-    println!("N = {}", N);
-    println!("\nRunning calculation...\n");
+    print!("Enter value for N: ");
+    std::io::stdout().flush()?;
+
+    let mut input = String::new();
+    std::io::stdin().read_line(&mut input)?;
+
+    let n: u64 = input.trim().parse().unwrap();
+    println!("\nRunning calculation...");
 
 
     let mut sum = 0;
 
-    for i in 1..N {
+    for i in 1..n {
         if i % 3 == 0 {
             sum += i;
         }
@@ -27,4 +33,6 @@ fn main() {
     }
 
     println!("Sum: {}", sum);
+
+    Ok(())
 }
