@@ -23,9 +23,15 @@ fn fib(n: u64) -> u64 {
 
     let mut sum = 0;
 
-    while second <= n {
-        let k = first + second;
-        sum += k;
+    let mut k = 0;
+    loop {
+        k = first + second;
+        if k > n {break}
+        
+        if k % 2 == 0 {
+            sum += k;
+        }
+        
 
         first = second;
         second = k;
